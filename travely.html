@@ -13,141 +13,177 @@
     --accent: #7b5ea7; --accent-light: #ede8f5;
     --teal: #2d9c7e; --teal-light: #e0f5ee;
     --serif: 'DM Serif Display', serif; --sans: 'DM Sans', sans-serif;
+    --px: clamp(1rem, 5vw, 3rem);
   }
   html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; font-weight: 300; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; font-weight: 300; overflow-x: hidden; }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 1.25rem 3rem;
-    background: rgba(247,244,239,0.92); backdrop-filter: blur(12px);
+    padding: 1rem var(--px);
+    background: rgba(247,244,239,0.95); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--cream-2);
   }
-  .nav-logo { font-family: var(--serif); font-size: 1.1rem; text-decoration: none; color: var(--ink); }
-  .nav-links { display: flex; gap: 2rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
-  .nav-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+  .nav-logo { font-family: var(--serif); font-size: 1.05rem; text-decoration: none; color: var(--ink); }
+  .nav-links { display: flex; gap: 2rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-links a { text-decoration: none; color: var(--ink-2); transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
-  .nav-back { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color 0.2s; }
-  .nav-back:hover { color: var(--accent); }
+  .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; top: 57px; left: 0; right: 0; z-index: 190; background: rgba(247,244,239,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--cream-2); flex-direction: column; padding: 1.5rem var(--px); gap: 1.25rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); padding: 0.25rem 0; border-bottom: 1px solid var(--cream-2); }
+  .mobile-menu a:last-child { border-bottom: none; }
 
-  /* LAYOUT */
-  section { padding: 6rem 3rem; border-bottom: 1px solid var(--cream-2); }
+  /* ── SHARED ── */
+  section { padding: clamp(3rem, 8vw, 6rem) var(--px); border-bottom: 1px solid var(--cream-2); }
   .section-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
   .section-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--cream-2); }
-  h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-  h3 { font-family: var(--serif); font-size: 1.4rem; letter-spacing: -0.01em; margin-bottom: 0.75rem; }
+  h2 { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: var(--serif); font-size: clamp(1.05rem, 2.5vw, 1.4rem); letter-spacing: -0.01em; margin-bottom: 0.75rem; }
   p { color: var(--ink-2); max-width: 65ch; line-height: 1.75; margin-bottom: 1rem; }
   p:last-child { margin-bottom: 0; }
+  footer { padding: 1.5rem var(--px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; border-top: 1px solid var(--cream-2); }
+  footer p { font-size: 0.75rem; color: var(--ink-3); margin: 0; max-width: none; }
 
-  /* HERO */
+  /* ── CASE STUDY HERO ── */
   .cs-hero {
-    min-height: 60vh; padding: 10rem 3rem 5rem;
     background: var(--ink);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end;
+    padding: clamp(5rem, 12vw, 10rem) var(--px) clamp(3rem, 6vw, 5rem);
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: end;
   }
-  .cs-back { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,244,239,0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 2rem; transition: color 0.2s; }
+  .cs-back { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,244,239,0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.5rem; transition: color 0.2s; }
   .cs-back:hover { color: var(--accent); }
-  .cs-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(123,94,167,0.4); padding: 4px 12px; border-radius: 2px; margin-bottom: 1.25rem; }
-  .cs-title { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.0; letter-spacing: -0.025em; color: var(--cream); margin-bottom: 1.25rem; }
+  .cs-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(123,94,167,0.4); padding: 4px 12px; border-radius: 2px; margin-bottom: 1.1rem; }
+  .cs-title { font-family: var(--serif); font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: 1.0; letter-spacing: -0.025em; color: var(--cream); margin-bottom: 1.1rem; }
   .cs-title em { font-style: italic; color: var(--accent); }
-  .cs-desc { font-size: 1rem; color: rgba(247,244,239,0.6); max-width: 46ch; line-height: 1.75; }
-  .cs-meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 2rem; background: rgba(247,244,239,0.05); border-radius: 4px; border: 1px solid rgba(247,244,239,0.08); }
-  .cs-meta-item label { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,244,239,0.35); margin-bottom: 4px; }
-  .cs-meta-item span { font-size: 0.9rem; color: rgba(247,244,239,0.8); }
+  .cs-desc { font-size: clamp(0.9rem, 1.5vw, 1rem); color: rgba(247,244,239,0.6); max-width: 46ch; line-height: 1.75; }
+  .cs-meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; padding: 1.75rem; background: rgba(247,244,239,0.05); border-radius: 4px; border: 1px solid rgba(247,244,239,0.08); }
+  .cs-meta-item label { display: block; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,244,239,0.35); margin-bottom: 4px; }
+  .cs-meta-item span { font-size: 0.85rem; color: rgba(247,244,239,0.8); line-height: 1.4; display: block; }
 
-  /* OVERVIEW */
-  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .challenge-box { background: var(--ink); border-radius: 4px; padding: 2.5rem; margin-bottom: 1.5rem; }
+  /* ── OVERVIEW ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .challenge-box { background: var(--ink); border-radius: 4px; padding: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 1.5rem; }
   .challenge-box .section-label { color: rgba(247,244,239,0.4); }
   .challenge-box .section-label::after { background: rgba(247,244,239,0.15); }
-  .hmw { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: rgba(247,244,239,0.9); border-left: 2px solid var(--accent); padding-left: 1rem; margin: 1rem 0; line-height: 1.55; }
+  .hmw { font-family: var(--serif); font-size: clamp(0.95rem, 1.5vw, 1.05rem); font-style: italic; color: rgba(247,244,239,0.9); border-left: 2px solid var(--accent); padding-left: 1rem; margin: 1rem 0; line-height: 1.55; }
   .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .stat-card { border: 1px solid var(--cream-2); border-radius: 4px; padding: 1.5rem; background: white; }
-  .stat { font-family: var(--serif); font-size: 2.8rem; color: var(--accent); display: block; margin-bottom: 0.25rem; line-height: 1; }
+  .stat-card { border: 1px solid var(--cream-2); border-radius: 4px; padding: 1.25rem; background: white; }
+  .stat { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); color: var(--accent); display: block; margin-bottom: 0.25rem; line-height: 1; }
   .stat-card p { font-size: 0.82rem; color: var(--ink-3); max-width: none; margin: 0; }
 
-  /* PROCESS */
-  .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 3rem; }
-  .process-step { padding: 1.5rem; border-left: 1px solid var(--cream-2); }
+  /* ── PROCESS ── */
+  .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 2.5rem; }
+  .process-step { padding: 1.25rem; border-left: 1px solid var(--cream-2); }
   .process-step:first-child { border-left: none; }
-  .step-num { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.75rem; }
-  .step-title { font-weight: 500; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.5rem; }
-  .step-detail { font-size: 0.8rem; color: var(--ink-3); line-height: 1.5; }
-  .step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cream-2); margin-bottom: 1rem; }
+  .step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cream-2); margin-bottom: 0.75rem; }
   .step-dot.active { background: var(--accent); }
+  .step-num { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+  .step-title { font-weight: 500; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.4rem; }
+  .step-detail { font-size: 0.78rem; color: var(--ink-3); line-height: 1.5; }
 
-  /* RESEARCH */
-  .research-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
-  .research-card { border: 1px solid var(--cream-2); border-radius: 4px; padding: 1.75rem; background: white; }
+  /* ── RESEARCH ── */
+  .research-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .research-card { border: 1px solid var(--cream-2); border-radius: 4px; padding: 1.5rem; background: white; }
   .research-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-  .research-card p { font-size: 0.85rem; color: var(--ink-3); max-width: none; margin-bottom: 0; }
+  .research-card p { font-size: 0.83rem; color: var(--ink-3); max-width: none; margin-bottom: 0; }
   .card-icon { font-size: 1.25rem; margin-bottom: 0.75rem; display: block; }
 
-  /* INSIGHTS */
-  .insights-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; margin-top: 2rem; }
+  /* ── INSIGHTS ── */
+  .insights-layout { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; margin-top: 2rem; }
   .insight-list { list-style: none; }
-  .insight-list li { padding: 1.25rem 0; border-bottom: 1px solid var(--cream-2); font-size: 0.9rem; color: var(--ink-2); display: flex; gap: 1rem; align-items: flex-start; }
-  .insight-num { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); font-weight: 500; padding-top: 3px; flex-shrink: 0; }
-  .journey-visual { background: white; border: 1px solid var(--cream-2); border-radius: 4px; padding: 2rem; overflow: hidden; }
-  .journey-phases { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 1.5rem; }
-  .phase-box { background: var(--accent-light); border-radius: 3px; padding: 8px 6px; font-size: 0.6rem; font-weight: 500; color: var(--accent); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.3; }
-  .phase-emoji { font-size: 0.9rem; display: block; margin-bottom: 2px; }
-  .journey-row { display: grid; grid-template-columns: 80px repeat(7, 1fr); gap: 4px; margin-bottom: 4px; align-items: center; }
-  .journey-row-label { font-size: 0.65rem; color: var(--ink-3); text-align: right; padding-right: 8px; }
-  .journey-cell { background: var(--cream); border-radius: 2px; height: 28px; font-size: 0.55rem; color: var(--ink-3); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; padding: 2px; }
+  .insight-list li { padding: 1rem 0; border-bottom: 1px solid var(--cream-2); font-size: 0.88rem; color: var(--ink-2); display: flex; gap: 1rem; align-items: flex-start; }
+  .insight-num { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--accent); font-weight: 500; padding-top: 3px; flex-shrink: 0; }
+  .journey-visual { background: white; border: 1px solid var(--cream-2); border-radius: 4px; padding: 1.5rem; overflow-x: auto; }
+  .journey-phases { display: grid; grid-template-columns: repeat(7, minmax(60px, 1fr)); gap: 4px; margin-bottom: 1rem; min-width: 500px; }
+  .phase-box { background: var(--accent-light); border-radius: 3px; padding: 6px 4px; font-size: 0.58rem; font-weight: 500; color: var(--accent); text-align: center; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3; }
+  .phase-emoji { font-size: 0.85rem; display: block; margin-bottom: 2px; }
+  .journey-row { display: grid; grid-template-columns: 70px repeat(7, minmax(60px, 1fr)); gap: 4px; margin-bottom: 4px; align-items: center; min-width: 500px; }
+  .journey-row-label { font-size: 0.6rem; color: var(--ink-3); text-align: right; padding-right: 6px; }
+  .journey-cell { background: var(--cream); border-radius: 2px; height: 26px; font-size: 0.52rem; color: var(--ink-3); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; padding: 2px; }
   .journey-cell.highlight { background: var(--teal-light); color: var(--teal); }
   .journey-cell.pain { background: #fde8e8; color: #c0392b; }
 
-  /* SOLUTION */
-  .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
-  .solution-card { border-radius: 4px; padding: 2rem; border: 1px solid var(--cream-2); background: white; }
-  .solution-card.featured { background: var(--ink); border-color: var(--ink); grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  /* ── SOLUTION ── */
+  .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .solution-card { border-radius: 4px; padding: 1.75rem; border: 1px solid var(--cream-2); background: white; }
+  .solution-card.featured { background: var(--ink); border-color: var(--ink); grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
   .solution-card.featured h3 { color: var(--cream); }
   .solution-card.featured p { color: rgba(247,244,239,0.65); max-width: none; }
   .solution-card.featured .section-label { color: rgba(247,244,239,0.4); }
   .solution-card.featured .section-label::after { background: rgba(247,244,239,0.15); }
-  .solution-icon { width: 36px; height: 36px; border-radius: 3px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 1rem; }
-  .flow-mini { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 1rem; }
-  .flow-node { background: rgba(247,244,239,0.1); border: 1px solid rgba(247,244,239,0.2); border-radius: 3px; padding: 4px 10px; font-size: 0.65rem; color: rgba(247,244,239,0.7); }
-  .flow-arrow { color: rgba(247,244,239,0.3); font-size: 0.75rem; }
+  .solution-icon { width: 34px; height: 34px; border-radius: 3px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 0.85rem; }
+  .flow-mini { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; margin-top: 1rem; }
+  .flow-node { background: rgba(247,244,239,0.1); border: 1px solid rgba(247,244,239,0.2); border-radius: 3px; padding: 3px 9px; font-size: 0.63rem; color: rgba(247,244,239,0.7); }
+  .flow-arrow { color: rgba(247,244,239,0.3); font-size: 0.7rem; }
 
-  /* VISUAL DESIGN */
-  /* (phone mockup styles inline) */
+  /* ── VISUAL DESIGN ── */
+  .visual-design-inner { display: flex; justify-content: center; gap: clamp(1.5rem, 4vw, 3rem); align-items: flex-start; flex-wrap: wrap; margin-top: 2.5rem; }
 
-  /* PROTOTYPE */
-  .figma-wrap { margin-top: 2rem; border-radius: 4px; overflow: hidden; border: 1px solid var(--cream-2); }
-  .figma-wrap iframe { display: block; border: none; width: 100%; height: 560px; }
+  /* ── PROTOTYPE ── */
+  .figma-wrap { margin-top: 2rem; border-radius: 4px; overflow: hidden; border: 1px solid var(--cream-2); position: relative; }
+  .figma-wrap iframe { display: block; border: none; width: 100%; height: clamp(300px, 56vw, 560px); }
 
-  /* REFLECTION */
-  .reflection-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .reflection-card { border-radius: 4px; padding: 1.75rem; border: 1px solid var(--cream-2); }
-  .reflection-card h3 { font-size: 0.95rem; font-family: var(--sans); font-weight: 500; margin-bottom: 0.5rem; color: var(--ink); }
-  .reflection-card p { font-size: 0.85rem; color: var(--ink-3); max-width: none; }
+  /* ── REFLECTION ── */
+  .reflection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .reflection-card { border-radius: 4px; padding: 1.5rem; border: 1px solid var(--cream-2); }
+  .reflection-card h3 { font-size: 0.92rem; font-family: var(--sans); font-weight: 500; margin-bottom: 0.5rem; color: var(--ink); }
+  .reflection-card p { font-size: 0.83rem; color: var(--ink-3); max-width: none; }
   .reflection-card.learned { background: var(--accent-light); border-color: rgba(123,94,167,0.2); }
   .reflection-card.next { background: var(--teal-light); border-color: rgba(45,156,126,0.2); }
 
-  /* NEXT CASE */
-  .next-bar { display: flex; align-items: center; justify-content: space-between; padding: 3rem; background: white; text-decoration: none; border-top: 1px solid var(--cream-2); transition: background 0.2s; }
+  /* ── BACK BAR ── */
+  .next-bar { display: flex; align-items: center; justify-content: space-between; padding: clamp(1.5rem, 4vw, 3rem) var(--px); background: white; text-decoration: none; border-top: 1px solid var(--cream-2); transition: background 0.2s; }
   .next-bar:hover { background: var(--accent-light); }
   .next-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
-  .next-title { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); }
-  .next-arrow { font-size: 1.5rem; color: var(--ink-3); }
+  .next-title { font-family: var(--serif); font-size: clamp(1.1rem, 3vw, 1.4rem); color: var(--ink); }
+  .next-arrow { font-size: 1.4rem; color: var(--ink-3); flex-shrink: 0; }
 
-  footer { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--cream-2); }
-  footer p { font-size: 0.75rem; color: var(--ink-3); margin: 0; max-width: none; }
-
+  /* ══════════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════════ */
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .cs-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 3rem; }
-    .overview-grid, .insights-layout, .solution-grid, .research-cols, .reflection-grid { grid-template-columns: 1fr; }
+    .nav-burger { display: flex; }
+    .cs-hero { grid-template-columns: 1fr; }
+    .cs-meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .overview-grid { grid-template-columns: 1fr; }
+    .insights-layout { grid-template-columns: 1fr; }
+    .solution-grid { grid-template-columns: 1fr; }
     .solution-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .research-cols { grid-template-columns: 1fr 1fr; }
+    .reflection-grid { grid-template-columns: 1fr 1fr; }
     .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-step:nth-child(odd) { border-left: none; }
+    .process-step { border-top: 1px solid var(--cream-2); padding-top: 1.25rem; }
+    .process-step:nth-child(1), .process-step:nth-child(2) { border-top: none; }
+  }
+
+  @media (max-width: 600px) {
+    .cs-meta-grid { grid-template-columns: 1fr 1fr; }
+    .research-cols { grid-template-columns: 1fr; }
+    .reflection-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { border-left: none; border-top: 1px solid var(--cream-2); }
+    .process-step:first-child { border-top: none; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .visual-design-inner { flex-direction: column; align-items: center; }
+  }
+
+  @media (max-width: 480px) {
+    :root { --px: 1.1rem; }
+    .cs-title { font-size: clamp(1.9rem, 10vw, 2.5rem); }
     .cs-meta-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1rem; }
+    section { padding: 2.5rem var(--px); }
+    .solution-card { padding: 1.25rem; }
+    .challenge-box { padding: 1.25rem; }
   }
 </style>
 </head>
@@ -160,9 +196,18 @@
     <a href="index.html#about">About</a>
     <a href="index.html#contact">Contact</a>
   </div>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- CASE STUDY HERO -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#work" onclick="closeMenu()">Work</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
 <section class="cs-hero">
   <div>
     <a class="cs-back" href="index.html">← Back to portfolio</a>
@@ -172,30 +217,12 @@
   </div>
   <div>
     <div class="cs-meta-grid">
-      <div class="cs-meta-item">
-        <label>Duration</label>
-        <span>3 weeks</span>
-      </div>
-      <div class="cs-meta-item">
-        <label>Context</label>
-        <span>SPICED Academy Bootcamp</span>
-      </div>
-      <div class="cs-meta-item">
-        <label>Year</label>
-        <span>2024</span>
-      </div>
-      <div class="cs-meta-item">
-        <label>My role</label>
-        <span>Research · Design · Storytelling</span>
-      </div>
-      <div class="cs-meta-item">
-        <label>Methods</label>
-        <span>Interviews · Survey · Affinity mapping</span>
-      </div>
-      <div class="cs-meta-item">
-        <label>Tools</label>
-        <span>Figma · Google Forms</span>
-      </div>
+      <div class="cs-meta-item"><label>Duration</label><span>3 weeks</span></div>
+      <div class="cs-meta-item"><label>Context</label><span>SPICED Academy Bootcamp</span></div>
+      <div class="cs-meta-item"><label>Year</label><span>2026</span></div>
+      <div class="cs-meta-item"><label>My role</label><span>Research · Design · Storytelling</span></div>
+      <div class="cs-meta-item"><label>Methods</label><span>Interviews · Survey · Affinity mapping</span></div>
+      <div class="cs-meta-item"><label>Tools</label><span>Figma · Google Forms</span></div>
     </div>
   </div>
 </section>
@@ -216,55 +243,24 @@
         <p class="hmw">"How might we support collaborative planning without relying on messy chat discussions?"</p>
       </div>
       <div class="stat-row">
-        <div class="stat-card">
-          <span class="stat">3</span>
-          <p>user interviews conducted</p>
-        </div>
-        <div class="stat-card">
-          <span class="stat">25</span>
-          <p>survey respondents</p>
-        </div>
+        <div class="stat-card"><span class="stat">3</span><p>user interviews conducted</p></div>
+        <div class="stat-card"><span class="stat">25</span><p>survey respondents</p></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROCESS -->
-<section id="process" style="background: white;">
+<section id="process" style="background:white;">
   <div class="section-label">02 — Process</div>
   <h2>How we got there</h2>
   <p>A double-diamond approach compressed into 3 weeks — from broad discovery to focused delivery.</p>
   <div class="process-steps">
-    <div class="process-step">
-      <div class="step-dot active"></div>
-      <div class="step-num">Week 1</div>
-      <div class="step-title">Discover</div>
-      <div class="step-detail">Secondary research, competitive analysis, survey (25 respondents), 3 user interviews</div>
-    </div>
-    <div class="process-step">
-      <div class="step-dot active"></div>
-      <div class="step-num">Week 1–2</div>
-      <div class="step-title">Define</div>
-      <div class="step-detail">Affinity mapping, insights synthesis, persona development, user journey map</div>
-    </div>
-    <div class="process-step">
-      <div class="step-dot active"></div>
-      <div class="step-num">Week 2</div>
-      <div class="step-title">Ideate</div>
-      <div class="step-detail">HMW questions, site map, user flows (3 core flows), design principles</div>
-    </div>
-    <div class="process-step">
-      <div class="step-dot active"></div>
-      <div class="step-num">Week 2–3</div>
-      <div class="step-title">Prototype</div>
-      <div class="step-detail">Wireframes, low-fidelity screens, interactive prototype in Figma</div>
-    </div>
-    <div class="process-step">
-      <div class="step-dot"></div>
-      <div class="step-num">Week 3</div>
-      <div class="step-title">Present</div>
-      <div class="step-detail">Storytelling deck, design rationale, bootcamp presentation</div>
-    </div>
+    <div class="process-step"><div class="step-dot active"></div><div class="step-num">Week 1</div><div class="step-title">Discover</div><div class="step-detail">Secondary research, competitive analysis, survey (25), 3 interviews</div></div>
+    <div class="process-step"><div class="step-dot active"></div><div class="step-num">Week 1–2</div><div class="step-title">Define</div><div class="step-detail">Affinity mapping, insights synthesis, persona, user journey map</div></div>
+    <div class="process-step"><div class="step-dot active"></div><div class="step-num">Week 2</div><div class="step-title">Ideate</div><div class="step-detail">HMW questions, site map, 3 core user flows, design principles</div></div>
+    <div class="process-step"><div class="step-dot active"></div><div class="step-num">Week 2–3</div><div class="step-title">Prototype</div><div class="step-detail">Wireframes, low-fidelity screens, interactive Figma prototype</div></div>
+    <div class="process-step"><div class="step-dot"></div><div class="step-num">Week 3</div><div class="step-title">Present</div><div class="step-detail">Storytelling deck, design rationale, bootcamp presentation</div></div>
   </div>
 </section>
 
@@ -274,26 +270,14 @@
   <h2>What we found</h2>
   <p>Mixed-methods research combining a 16-question online survey with qualitative interviews revealed three core pain clusters.</p>
   <div class="research-cols">
-    <div class="research-card">
-      <span class="card-icon">🔔</span>
-      <h3>Notification overload</h3>
-      <p>Travellers were drowning in updates — yet still missing critical changes. Too much noise, not enough signal. Apps weren't helping users distinguish urgent from routine alerts.</p>
-    </div>
-    <div class="research-card">
-      <span class="card-icon">👥</span>
-      <h3>Group coordination friction</h3>
-      <p>Groups defaulted to chat threads for planning — but chat is ephemeral and non-structured. Preferences were raised, forgotten, and re-raised. No single source of truth existed.</p>
-    </div>
-    <div class="research-card">
-      <span class="card-icon">⚡</span>
-      <h3>Disruption handling</h3>
-      <p>When itineraries changed, users had to manually find alternatives across multiple apps. Rebooking a flight meant leaving the planning context entirely — causing stress and decision fatigue.</p>
-    </div>
+    <div class="research-card"><span class="card-icon">🔔</span><h3>Notification overload</h3><p>Travellers were drowning in updates — yet still missing critical changes. Apps weren't helping users distinguish urgent from routine alerts.</p></div>
+    <div class="research-card"><span class="card-icon">👥</span><h3>Group coordination friction</h3><p>Groups defaulted to chat threads — but chat is ephemeral and non-structured. Preferences got lost. No single source of truth existed.</p></div>
+    <div class="research-card"><span class="card-icon">⚡</span><h3>Disruption handling</h3><p>When itineraries changed, users had to manually find alternatives across multiple apps, causing stress and decision fatigue.</p></div>
   </div>
 </section>
 
 <!-- INSIGHTS -->
-<section id="insights" style="background: white;">
+<section id="insights" style="background:white;">
   <div class="section-label">04 — Insights</div>
   <h2>From observations to design direction</h2>
   <div class="insights-layout">
@@ -308,7 +292,7 @@
     </div>
     <div>
       <div class="journey-visual">
-        <div style="font-size: 0.7rem; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem;">User journey — Alex, The Trip Organiser</div>
+        <div style="font-size:0.68rem;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">User journey — Alex, The Trip Organiser</div>
         <div class="journey-phases">
           <div class="phase-box"><span class="phase-emoji">🔍</span>Discover</div>
           <div class="phase-box"><span class="phase-emoji">📋</span>Plan</div>
@@ -320,13 +304,13 @@
         </div>
         <div class="journey-row">
           <div class="journey-row-label">Actions</div>
-          <div class="journey-cell">Opens app, selects group planner</div>
-          <div class="journey-cell">Searches topics, finalises survey</div>
-          <div class="journey-cell highlight">Shares survey with friends</div>
+          <div class="journey-cell">Opens app</div>
+          <div class="journey-cell">Finalises survey</div>
+          <div class="journey-cell highlight">Shares survey</div>
           <div class="journey-cell">Receives notifications</div>
-          <div class="journey-cell highlight">Gets message: plans ready</div>
-          <div class="journey-cell">Compares two itineraries</div>
-          <div class="journey-cell highlight">Receives final PDF</div>
+          <div class="journey-cell highlight">Plans ready</div>
+          <div class="journey-cell">Compares itineraries</div>
+          <div class="journey-cell highlight">Receives PDF</div>
         </div>
         <div class="journey-row">
           <div class="journey-row-label">Feeling</div>
@@ -351,129 +335,115 @@
   <div class="solution-grid">
     <div class="solution-card featured">
       <div>
-        <div class="section-label" style="color: rgba(247,244,239,0.4);">Core flow</div>
+        <div class="section-label" style="color:rgba(247,244,239,0.4);">Core flow</div>
         <h3>Preference-to-itinerary pipeline</h3>
-        <p>The trip coordinator creates a structured questionnaire covering travel type, budget, accommodation, and duration. Responses feed into two AI-generated itinerary options: a majority-based plan and a balanced plan that honours minority preferences.</p>
+        <p>The trip coordinator creates a structured questionnaire. Responses feed into two AI-generated itinerary options: majority-based and balanced.</p>
         <div class="flow-mini">
           <div class="flow-node">Questionnaire</div><div class="flow-arrow">→</div>
-          <div class="flow-node">Group responses</div><div class="flow-arrow">→</div>
-          <div class="flow-node">2 itinerary options</div><div class="flow-arrow">→</div>
+          <div class="flow-node">Responses</div><div class="flow-arrow">→</div>
+          <div class="flow-node">2 options</div><div class="flow-arrow">→</div>
           <div class="flow-node">Group vote</div><div class="flow-arrow">→</div>
           <div class="flow-node">Final PDF</div>
         </div>
       </div>
-      <div style="background: rgba(255,255,255,0.05); border-radius: 4px; padding: 1.5rem;">
-        <div style="font-size: 0.7rem; color: rgba(247,244,239,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem;">3 core user flows</div>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-          <div style="background: rgba(123,94,167,0.3); border-radius: 3px; padding: 10px 14px; font-size: 0.8rem; color: var(--cream);">Flow 1 — Creating a plan</div>
-          <div style="background: rgba(255,255,255,0.07); border-radius: 3px; padding: 10px 14px; font-size: 0.8rem; color: rgba(247,244,239,0.6);">Flow 2 — Itinerary adaptation</div>
-          <div style="background: rgba(255,255,255,0.07); border-radius: 3px; padding: 10px 14px; font-size: 0.8rem; color: rgba(247,244,239,0.6);">Flow 3 — Group voting</div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:4px;padding:1.25rem;">
+        <div style="font-size:0.68rem;color:rgba(247,244,239,0.4);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.85rem;">3 core user flows</div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div style="background:rgba(123,94,167,0.3);border-radius:3px;padding:9px 12px;font-size:0.78rem;color:var(--cream);">Flow 1 — Creating a plan</div>
+          <div style="background:rgba(255,255,255,0.07);border-radius:3px;padding:9px 12px;font-size:0.78rem;color:rgba(247,244,239,0.6);">Flow 2 — Itinerary adaptation</div>
+          <div style="background:rgba(255,255,255,0.07);border-radius:3px;padding:9px 12px;font-size:0.78rem;color:rgba(247,244,239,0.6);">Flow 3 — Group voting</div>
         </div>
       </div>
     </div>
-    <div class="solution-card">
-      <div class="solution-icon">🗳️</div>
-      <h3>Transparent group decisions</h3>
-      <p>Every member votes on the final itinerary. Results are visible to all — no more "who decided this?" The voting system builds trust and shared ownership of the trip.</p>
-    </div>
-    <div class="solution-card">
-      <div class="solution-icon">🏠</div>
-      <h3>Dedicated trip workspace</h3>
-      <p>Each trip gets its own space: voting, budget tracker, group chat, and a shared inspiration board. One URL replaces five different apps and three chat groups.</p>
-    </div>
-    <div class="solution-card">
-      <div class="solution-icon">📄</div>
-      <h3>Auto-generated trip PDF</h3>
-      <p>After confirmation, the app generates a complete itinerary PDF with tickets, reservations, emergency contacts, and calendar integration — shareable with the whole group instantly.</p>
-    </div>
-    <div class="solution-card">
-      <div class="solution-icon">🗺️</div>
-      <h3>Information architecture</h3>
-      <p>Site map spanning 7 top-level sections and 4 depth levels — designed around mental models revealed in research, not feature lists.</p>
-    </div>
+    <div class="solution-card"><div class="solution-icon">🗳️</div><h3>Transparent group decisions</h3><p>Every member votes on the final itinerary. Results are visible to all — building trust and shared ownership of the trip.</p></div>
+    <div class="solution-card"><div class="solution-icon">🏠</div><h3>Dedicated trip workspace</h3><p>Each trip gets its own space: voting, budget tracker, group chat, and a shared inspiration board.</p></div>
+    <div class="solution-card"><div class="solution-icon">📄</div><h3>Auto-generated trip PDF</h3><p>After confirmation, the app generates a complete itinerary PDF with tickets, reservations, emergency contacts, and calendar integration.</p></div>
+    <div class="solution-card"><div class="solution-icon">🗺️</div><h3>Information architecture</h3><p>Site map spanning 7 top-level sections and 4 depth levels — designed around mental models revealed in research, not feature lists.</p></div>
   </div>
 </section>
 
 <!-- VISUAL DESIGN -->
-<section id="visual-design" style="background: var(--ink); overflow: hidden;">
-  <div class="section-label" style="color: rgba(247,244,239,0.4);">06 — Visual design<span style="display:inline-block; width:40px; height:1px; background:rgba(247,244,239,0.15); margin-left:1rem; vertical-align:middle;"></span></div>
-  <h2 style="color: var(--cream);">From wireframe to colour</h2>
-  <p style="color: rgba(247,244,239,0.6); max-width: 52ch;">Applying Travely's visual identity to the homepage wireframe — structured, warm, and built around discovery.</p>
-  <div style="display: flex; justify-content: center; margin-top: 3rem; gap: 3rem; align-items: flex-start; flex-wrap: wrap;">
-    <div style="width:280px;background:#fff;border-radius:36px;box-shadow:0 60px 120px rgba(0,0,0,0.5),0 0 0 8px #1a1814,0 0 0 10px #2d2b27;overflow:hidden;flex-shrink:0;">
-      <div style="background:#fff;padding:12px 20px 6px;display:flex;justify-content:space-between;align-items:center;">
+<section id="visual-design" style="background:var(--ink);overflow:hidden;">
+  <div class="section-label" style="color:rgba(247,244,239,0.4);">06 — Visual design<span style="display:inline-block;width:40px;height:1px;background:rgba(247,244,239,0.15);margin-left:1rem;vertical-align:middle;"></span></div>
+  <h2 style="color:var(--cream);">From wireframe to colour</h2>
+  <p style="color:rgba(247,244,239,0.6);max-width:52ch;">Applying Travely's visual identity to the homepage wireframe — structured, warm, and built around discovery.</p>
+
+  <div class="visual-design-inner">
+    <!-- Phone mockup -->
+    <div style="width:clamp(220px,50vw,280px);background:#fff;border-radius:36px;box-shadow:0 60px 120px rgba(0,0,0,0.5),0 0 0 8px #1a1814,0 0 0 10px #2d2b27;overflow:hidden;flex-shrink:0;">
+      <div style="background:#fff;padding:10px 18px 5px;display:flex;justify-content:space-between;align-items:center;">
         <span style="font-size:11px;font-weight:600;color:#1a1814;font-family:var(--sans);">9:41</span>
         <div style="display:flex;gap:5px;align-items:center;">
-          <svg width="15" height="11" viewBox="0 0 15 11"><rect x="0" y="4" width="3" height="7" rx="1" fill="#1a1814"/><rect x="4" y="2.5" width="3" height="8.5" rx="1" fill="#1a1814"/><rect x="8" y="1" width="3" height="10" rx="1" fill="#1a1814"/><rect x="12" y="0" width="3" height="11" rx="1" fill="#1a1814"/></svg>
-          <div style="width:22px;height:11px;border:1.5px solid #1a1814;border-radius:3px;position:relative;display:flex;align-items:center;padding:1.5px;"><div style="width:75%;height:100%;background:#1a1814;border-radius:1.5px;"></div></div>
+          <svg width="14" height="10" viewBox="0 0 15 11"><rect x="0" y="4" width="3" height="7" rx="1" fill="#1a1814"/><rect x="4" y="2.5" width="3" height="8.5" rx="1" fill="#1a1814"/><rect x="8" y="1" width="3" height="10" rx="1" fill="#1a1814"/><rect x="12" y="0" width="3" height="11" rx="1" fill="#1a1814"/></svg>
+          <div style="width:20px;height:10px;border:1.5px solid #1a1814;border-radius:3px;position:relative;display:flex;align-items:center;padding:1.5px;"><div style="width:70%;height:100%;background:#1a1814;border-radius:1.5px;"></div></div>
         </div>
       </div>
-      <div style="background:#fff;padding:8px 18px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0ede8;">
-        <div style="background:#7b5ea7;border-radius:8px;padding:5px 14px;"><span style="font-size:14px;font-weight:700;color:white;font-family:var(--sans);">Travely</span></div>
-        <div style="display:flex;gap:10px;">
-          <div style="width:32px;height:32px;border-radius:50%;border:1.5px solid #ede9e2;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-        </div>
+      <div style="background:#fff;padding:6px 16px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0ede8;">
+        <div style="background:#7b5ea7;border-radius:7px;padding:4px 12px;"><span style="font-size:13px;font-weight:700;color:white;font-family:var(--sans);">Travely</span></div>
+        <div style="width:30px;height:30px;border-radius:50%;border:1.5px solid #ede9e2;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       </div>
-      <div style="background:#f7f4ef;overflow-y:auto;max-height:480px;">
-        <div style="padding:10px 18px 4px;"><span style="font-size:10px;color:#9a9690;font-family:var(--sans);">Homepage</span></div>
-        <div style="padding:4px 18px 12px;">
-          <div style="font-size:13px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:8px;">Your previous adventure</div>
-          <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.07);">
-            <div style="display:flex;align-items:stretch;">
-              <div style="width:90px;flex-shrink:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=200&q=80" alt="Barcelona" style="width:100%;height:80px;object-fit:cover;display:block;"></div>
-              <div style="padding:10px 12px;flex:1;">
-                <div style="font-size:13px;font-weight:600;color:#1a1814;font-family:var(--sans);">Barcelona</div>
-                <div style="font-size:10px;color:#9a9690;font-family:var(--sans);margin-bottom:8px;">March 3rd – 6th</div>
+      <div style="background:#f7f4ef;overflow-y:auto;max-height:420px;">
+        <div style="padding:8px 16px 3px;"><span style="font-size:10px;color:#9a9690;font-family:var(--sans);">Homepage</span></div>
+        <div style="padding:3px 16px 10px;">
+          <div style="font-size:12px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:7px;">Your previous adventure</div>
+          <div style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+            <div style="display:flex;">
+              <div style="width:82px;flex-shrink:0;"><img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=200&q=80" alt="Barcelona" style="width:100%;height:74px;object-fit:cover;display:block;"></div>
+              <div style="padding:9px 10px;flex:1;">
+                <div style="font-size:12px;font-weight:600;color:#1a1814;font-family:var(--sans);">Barcelona</div>
+                <div style="font-size:9px;color:#9a9690;font-family:var(--sans);margin-bottom:7px;">March 3rd – 6th</div>
                 <div style="display:flex;">
-                  <div style="width:22px;height:22px;border-radius:50%;background:#7b5ea7;border:2px solid white;display:flex;align-items:center;justify-content:center;margin-right:-6px;z-index:4;"><svg width="9" height="9" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                  <div style="width:22px;height:22px;border-radius:50%;background:#2d9c7e;border:2px solid white;display:flex;align-items:center;justify-content:center;margin-right:-6px;z-index:3;"><svg width="9" height="9" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                  <div style="width:22px;height:22px;border-radius:50%;background:#e8a020;border:2px solid white;display:flex;align-items:center;justify-content:center;z-index:2;"><svg width="9" height="9" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                  <div style="width:20px;height:20px;border-radius:50%;background:#7b5ea7;border:2px solid white;margin-right:-5px;z-index:4;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                  <div style="width:20px;height:20px;border-radius:50%;background:#2d9c7e;border:2px solid white;margin-right:-5px;z-index:3;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                  <div style="width:20px;height:20px;border-radius:50%;background:#e8a020;border:2px solid white;z-index:2;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div style="padding:4px 18px 12px;">
-          <div style="font-size:13px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:8px;">Trending Worldwide</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=200&q=80" alt="Paris" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">Paris</span></div></div>
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=200&q=80" alt="London" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">London</span></div></div>
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=200&q=80" alt="Kyoto" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">Kyoto</span></div></div>
+        <div style="padding:3px 16px 10px;">
+          <div style="font-size:12px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:7px;">Trending Worldwide</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=200&q=80" alt="Paris" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">Paris</span></div></div>
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=200&q=80" alt="London" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">London</span></div></div>
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=200&q=80" alt="Kyoto" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">Kyoto</span></div></div>
           </div>
         </div>
-        <div style="padding:4px 18px 16px;">
-          <div style="font-size:13px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:8px;">Trending in Germany</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1560969184-10fe8719e047?w=200&q=80" alt="Berlin" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">Berlin</span></div></div>
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=200&q=80" alt="Munich" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">Munich</span></div></div>
-            <div style="border-radius:10px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1595867818082-083862f3d630?w=200&q=80" alt="Hamburg" style="width:100%;height:70px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:4px 5px;"><span style="font-size:8px;color:white;font-weight:500;font-family:var(--sans);">Hamburg</span></div></div>
+        <div style="padding:3px 16px 14px;">
+          <div style="font-size:12px;font-weight:500;color:#1a1814;font-family:var(--sans);margin-bottom:7px;">Trending in Germany</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1560969184-10fe8719e047?w=200&q=80" alt="Berlin" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">Berlin</span></div></div>
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=200&q=80" alt="Munich" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">Munich</span></div></div>
+            <div style="border-radius:8px;overflow:hidden;position:relative;"><img src="https://images.unsplash.com/photo-1595867818082-083862f3d630?w=200&q=80" alt="Hamburg" style="width:100%;height:62px;object-fit:cover;display:block;"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:3px 4px;"><span style="font-size:7px;color:white;font-weight:500;font-family:var(--sans);">Hamburg</span></div></div>
           </div>
         </div>
       </div>
-      <div style="background:#fff;border-top:1px solid #f0ede8;padding:10px 0 14px;display:flex;justify-content:space-around;align-items:center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a1814" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <div style="width:38px;height:38px;background:#7b5ea7;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(123,94,167,0.4);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div style="background:#fff;border-top:1px solid #f0ede8;padding:8px 0 12px;display:flex;justify-content:space-around;align-items:center;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1a1814" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <div style="width:36px;height:36px;background:#7b5ea7;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(123,94,167,0.4);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#9a9690" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </div>
     </div>
-    <div style="max-width:260px;padding-top:2rem;display:flex;flex-direction:column;gap:2rem;">
+
+    <!-- Annotations -->
+    <div style="max-width:280px;padding-top:1rem;display:flex;flex-direction:column;gap:1.75rem;">
       <div>
-        <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,244,239,0.35);margin-bottom:0.5rem;">Colour palette</div>
+        <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,244,239,0.35);margin-bottom:0.5rem;">Colour palette</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:28px;height:28px;border-radius:50%;background:#7b5ea7;"></div><span style="font-size:9px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Primary</span></div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:28px;height:28px;border-radius:50%;background:#2d9c7e;"></div><span style="font-size:9px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Success</span></div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:28px;height:28px;border-radius:50%;background:#f7f4ef;border:1px solid rgba(255,255,255,0.1);"></div><span style="font-size:9px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Surface</span></div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:28px;height:28px;border-radius:50%;background:#1a1814;border:1px solid rgba(255,255,255,0.1);"></div><span style="font-size:9px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Ink</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border-radius:50%;background:#7b5ea7;"></div><span style="font-size:8px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Primary</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border-radius:50%;background:#2d9c7e;"></div><span style="font-size:8px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Success</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border-radius:50%;background:#f7f4ef;border:1px solid rgba(255,255,255,0.1);"></div><span style="font-size:8px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Surface</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border-radius:50%;background:#1a1814;border:1px solid rgba(255,255,255,0.1);"></div><span style="font-size:8px;color:rgba(247,244,239,0.4);font-family:var(--sans);">Ink</span></div>
         </div>
       </div>
       <div>
-        <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,244,239,0.35);margin-bottom:0.75rem;">Design decisions</div>
+        <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,244,239,0.35);margin-bottom:0.75rem;">Design decisions</div>
         <div style="display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="border-left:2px solid #7b5ea7;padding-left:0.75rem;"><div style="font-size:0.78rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Photo-first cards</div><div style="font-size:0.72rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">Destination images replace placeholders to build aspiration and context immediately.</div></div>
-          <div style="border-left:2px solid #2d9c7e;padding-left:0.75rem;"><div style="font-size:0.78rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Coloured avatar stack</div><div style="font-size:0.72rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">Each group member gets a distinct hue — makes shared trips feel social and personal.</div></div>
-          <div style="border-left:2px solid #e8a020;padding-left:0.75rem;"><div style="font-size:0.78rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Purple accent CTA</div><div style="font-size:0.72rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">The + button uses brand primary with a glow — the one clear action on every screen.</div></div>
+          <div style="border-left:2px solid #7b5ea7;padding-left:0.75rem;"><div style="font-size:0.77rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Photo-first cards</div><div style="font-size:0.7rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">Destination images replace placeholders to build aspiration immediately.</div></div>
+          <div style="border-left:2px solid #2d9c7e;padding-left:0.75rem;"><div style="font-size:0.77rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Coloured avatar stack</div><div style="font-size:0.7rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">Each group member gets a distinct hue — makes shared trips feel personal.</div></div>
+          <div style="border-left:2px solid #e8a020;padding-left:0.75rem;"><div style="font-size:0.77rem;color:rgba(247,244,239,0.85);font-family:var(--sans);margin-bottom:2px;">Purple accent CTA</div><div style="font-size:0.7rem;color:rgba(247,244,239,0.4);font-family:var(--sans);line-height:1.4;">The + button uses brand primary with a glow — the one clear action on every screen.</div></div>
         </div>
       </div>
     </div>
@@ -481,17 +451,14 @@
 </section>
 
 <!-- PROTOTYPE -->
-<section id="prototype" style="background: white;">
+<section id="prototype" style="background:white;">
   <div class="section-label">07 — Prototype</div>
   <h2>Interactive prototype</h2>
   <p>Explore the wireframes built in Figma — covering the three core user flows: creating a plan, itinerary adaptation, and group voting.</p>
   <div class="figma-wrap">
-    <iframe
-      src="https://embed.figma.com/design/yhtwYxoJ3NYfbC9ACh91A5/Travely-for-Portfolio?node-id=1-2&embed-host=share"
-      allowfullscreen
-    ></iframe>
+    <iframe src="https://embed.figma.com/design/yhtwYxoJ3NYfbC9ACh91A5/Travely-for-Portfolio?node-id=1-2&embed-host=share" allowfullscreen></iframe>
   </div>
-  <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--ink-3);">Use the controls inside the frame to navigate. Best in fullscreen — click the expand icon in the top-right of the embed.</p>
+  <p style="margin-top:1rem;font-size:0.8rem;color:var(--ink-3);">Use the controls inside the frame to navigate. Best in fullscreen — click the expand icon in the top-right of the embed.</p>
 </section>
 
 <!-- REFLECTION -->
@@ -499,22 +466,12 @@
   <div class="section-label">08 — Reflection</div>
   <h2>What I took away</h2>
   <div class="reflection-grid">
-    <div class="reflection-card">
-      <h3>What worked well</h3>
-      <p>The mixed-methods approach (survey + interviews) created a rich picture quickly. The user journey map became the clearest communication tool in the final presentation — both for the team and the audience.</p>
-    </div>
-    <div class="reflection-card learned">
-      <h3>What I learned</h3>
-      <p>Structuring group dynamics in a UI is fundamentally different from individual flows. The challenge wasn't the features — it was designing for asymmetric roles (coordinator vs. member) within the same interface.</p>
-    </div>
-    <div class="reflection-card next">
-      <h3>What's next</h3>
-      <p>Usability testing on the voting flow and the questionnaire UX. The AI-balanced itinerary concept needs validation — do users trust it? Do minority preferences actually feel represented?</p>
-    </div>
+    <div class="reflection-card"><h3>What worked well</h3><p>The mixed-methods approach created a rich picture quickly. The user journey map became the clearest communication tool in the final presentation.</p></div>
+    <div class="reflection-card learned"><h3>What I learned</h3><p>Structuring group dynamics in a UI is fundamentally different from individual flows. The challenge was designing for asymmetric roles (coordinator vs. member) within the same interface.</p></div>
+    <div class="reflection-card next"><h3>What's next</h3><p>Usability testing on the voting flow and the questionnaire UX. Does the AI-balanced itinerary feel trustworthy? Do minority preferences actually feel represented?</p></div>
   </div>
 </section>
 
-<!-- NEXT / BACK -->
 <a class="next-bar" href="index.html">
   <div>
     <div class="next-label">Back to portfolio</div>
@@ -528,5 +485,17 @@
   <p>SPICED Academy Bootcamp · Gelsenkirchen</p>
 </footer>
 
+<script>
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  function closeMenu() {
+    burger.classList.remove('open');
+    menu.classList.remove('open');
+  }
+</script>
 </body>
 </html>
